@@ -3,7 +3,13 @@ var countrySchema = function () {
     var Schema = require('mongoose').Schema;
 
     return new Schema({
-        isoCode: String,
+        isoCode: {
+		type: String,
+		index: true,
+		unique: true,
+		required: true,
+		dropDups: true
+	},
         createdAt: Date,
 	names: []
     });
