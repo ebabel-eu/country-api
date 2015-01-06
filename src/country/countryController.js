@@ -78,9 +78,7 @@ module.exports = function (app, options) {
     app.get('/country/lang/:lang', function (req, res) {
         // Filter the result by any provided querystring parameters.
         countryModel.find({
-                    names: [
-                        lang: req.params.lang
-                    ]
+                    'names.lang': req.params.lang
                 })
                 .exec(function (err, country) {
                 if (err) {
