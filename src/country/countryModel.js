@@ -3,7 +3,7 @@ var countrySchema = function () {
     var Schema = require('mongoose').Schema;
 
     return new Schema({
-        id: {
+        isoCode: {
             type: String,
             index: true,
             unique: true,
