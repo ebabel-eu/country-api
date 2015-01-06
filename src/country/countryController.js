@@ -9,7 +9,7 @@ module.exports = function (app, options) {
 	// List all countries.
 	app.get('/country', function (req, res) {
         // Mongoose querying via querystring. 
-        // Ex: append ?limit=2 or ?filter={"id": "de"}
+        // Ex: /country?limit=2 or /country?filter={"isoCode":"en"}
         var qSkip = req.query.skip,
             qLimit = req.query.limit,
             qSort = req.query.sort,
@@ -53,4 +53,18 @@ module.exports = function (app, options) {
         });
     });
 
+
+    // Delete a single country record by its unique iso code.
+    app.delete('/country/:isoCode', function (req, res) {
+        countryModel.findByIdAndRemove(req.params.isoCode, function (err, country) {
+            if (err) {
+                return options.handleError(err, req, res, 'Could not delete the record.');
+            }
+
+            res.send({
+                deleted: true,
+                country: country
+            });
+        });
+    });
 };
