@@ -35,7 +35,7 @@ module.exports = function (app, options) {
     // Read all countries.
     app.get('/country', function (req, res) {
         // Mongoose querying via querystring. 
-        // Ex: /country?limit=2 or /country?filter={"isoCode":"en"}
+        // Ex: /country?limit=2, /country?filter={"isoCode":"gb"} or /country/?filter={"names.lang": "nl"}
         var qSkip = req.query.skip,
             qLimit = req.query.limit,
             qSort = req.query.sort,
@@ -78,12 +78,19 @@ module.exports = function (app, options) {
     app.get('/country/lang/:lang', function (req, res) {
         // Filter the result by any provided querystring parameters.
         countryModel.find({
+                // Find any country that has a name entry with the matching language.
                 'names.lang': req.params.lang
+            }, {
+                // Exclude fields below:
+                _id: 0,
+                createdAt: 0,
+                __v: 0,
+                updatedAt: 0
             })
             .exec(function (err, country) {
                 if (err) {
-                        // Return an error message if a valid response couldn't be formulated.
-                        return options.handleError(err, req, res, 'Could not list the records.');
+                    // Return an error message if a valid response couldn't be formulated.
+                    return options.handleError(err, req, res, 'Could not list the records.');
                 }
 
                 // Return a valid response.
