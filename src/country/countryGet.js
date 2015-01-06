@@ -1,7 +1,9 @@
-module.exports = function (req, res) {
-    // Mongoose querying via querystring. 
-    // Ex: append ?limit=2 or ?filter={"id": "de"}
-    var qSkip = req.query.skip,
+var countryGet = function (req, res) {
+
+    var countryModel = {},
+	// Mongoose querying via querystring. 
+   	// Ex: append ?limit=2 or ?filter={"id": "de"}
+   	qSkip = req.query.skip,
         qLimit = req.query.limit,
         qSort = req.query.sort,
         qFilter = req.query.filter ? JSON.parse(req.query.filter) : {};
@@ -24,3 +26,8 @@ module.exports = function (req, res) {
             });
         });
 };
+
+module.exports = function () {
+	return countryGet;
+};
+

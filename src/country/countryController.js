@@ -4,8 +4,8 @@ module.exports = function (app, options) {
 	var mongoose = options.mongoose,
 	    Schema = options.mongoose.Schema,
 	    db = options.db,
-	    countryModel = require('./countryModel')(db),
-        countryGet = require('./countryGet')(req, res);
+	    countryGet = require('./countryGet'),
+	    countryModel = require('./countryModel')(db);
 
 	// Get a list of all countries.
 	app.get('/country', countryGet);
