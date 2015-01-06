@@ -4,14 +4,15 @@ var countrySchema = function () {
 
     return new Schema({
         isoCode: {
-		type: String,
-		index: true,
-		unique: true,
-		required: true,
-		dropDups: true
-	},
+            type: String,
+            index: true,
+            unique: true,
+            required: true,
+            dropDups: true
+        },
         createdAt: Date,
-	names: []
+        updatedAt: Date,
+        names: []
     });
 };
 
