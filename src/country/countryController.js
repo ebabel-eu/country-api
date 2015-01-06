@@ -60,6 +60,20 @@ module.exports = function (app, options) {
         });
     });
 
+    // Read a single country record by its _id.
+    app.get('/country/:id', function (req, res) {
+        countryModel.findById(req.params.id, function (err, country) {
+            if (err) {
+                return options.handleError(err, req, res, 'Could not find the record.');
+            }
+
+            res.send({
+                found: country !== null,
+                country: country
+            });
+        });
+    });
+
     // Update a single country record by its _id.
     app.put('/country/:id', function (req, res) {
 
