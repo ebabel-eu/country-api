@@ -11,7 +11,12 @@ var countrySchema = function () {
             dropDups: true
         },
         createdAt: Date,
-        names: []   // Ex: [ {lang: 'en', name: 'Netherlands (the)'}, {lang: 'nl', name: 'Nederland'} ]
+	names: [],
+	create: String,	
+	read: String,
+	readById: String,
+	update: String,
+	delete: String
     });
 };
 

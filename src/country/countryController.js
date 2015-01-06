@@ -4,7 +4,7 @@ module.exports = function (app, options) {
 	var mongoose = options.mongoose,
 	    Schema = options.mongoose.Schema,
 	    db = options.db,
-        countryModel = require('./countryModel')(db);
+            countryModel = require('./countryModel')(db);
 
 	// List all countries.
 	app.get('/country', function (req, res) {
@@ -39,6 +39,11 @@ module.exports = function (app, options) {
         var country = new countryModel(req.body);
 
         country.createdAt = Date.now();
+	country.create = 'POST /country';
+	country.read = 'GET /country';
+	country.readById = 'GET /country/' + country._id;
+	country.update = 'PUT /country/' + country._id;
+	country.delete = 'DELETE /country/' + country._id;
 
         country.save(function (err) {
             if (err) {
