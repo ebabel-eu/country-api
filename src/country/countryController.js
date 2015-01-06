@@ -54,9 +54,9 @@ module.exports = function (app, options) {
     });
 
 
-    // Delete a single country record by its unique iso code.
-    app.delete('/country/:isoCode', function (req, res) {
-        countryModel.findByIdAndRemove(req.params.isoCode, function (err, country) {
+    // Delete a single country record by its _id.
+    app.delete('/country/:id', function (req, res) {
+        countryModel.findByIdAndRemove(req.params.id, function (err, country) {
             if (err) {
                 return options.handleError(err, req, res, 'Could not delete the record.');
             }
