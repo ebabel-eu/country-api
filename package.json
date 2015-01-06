@@ -1,0 +1,11 @@
+{
+  "name": "country-api",
+  "version": "1.0.0",
+  "description": "NodeJS workshop for eFocus labs",
+  "author": "Nadjib Amar <nadjib.amar@efocus.nl>",
+  "dependencies": {
+    "express": "^4.10.7",
+    "body-parser": "^1.10.1",
+    "mongoose": "^3.8.21"
+  }
+}
