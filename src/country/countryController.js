@@ -74,7 +74,7 @@ module.exports = function (app, options) {
         });
     });
 
-    // Read all countries matching a given a language.
+    // Read all countries matching a given language.
     app.get('/country/lang/:lang', function (req, res) {
         // Filter the result by any provided querystring parameters.
         countryModel.find({
