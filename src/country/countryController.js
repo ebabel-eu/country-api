@@ -8,23 +8,23 @@ module.exports = function (app, options) {
 
 	// List all countries.
 	app.get('/country', function (req, res) {
-        // Mongoose querying via querystring. 
-        // Ex: /country?limit=2 or /country?filter={"isoCode":"en"}
-        var qSkip = req.query.skip,
-            qLimit = req.query.limit,
-            qSort = req.query.sort,
-            qFilter = req.query.filter ? JSON.parse(req.query.filter) : {};
+        	// Mongoose querying via querystring. 
+        	// Ex: /country?limit=2 or /country?filter={"isoCode":"en"}
+        	var qSkip = req.query.skip,
+        	    qLimit = req.query.limit,
+        	    qSort = req.query.sort,
+        	    qFilter = req.query.filter ? JSON.parse(req.query.filter) : {};
 
-        // Filter the result by any provided querystring parameters.
-        countryModel.find(qFilter)
-            .sort(qSort)
-            .skip(qSkip)
-            .limit(qLimit)
-            .exec(function (err, country) {
-                if (err) {
-                    // Return an error message if a valid response couldn't be formulated.
-                    return options.handleError(err, req, res, 'Could not list the records.');
-                }
+        	// Filter the result by any provided querystring parameters.
+       		countryModel.find(qFilter)
+            	    .sort(qSort)
+            	    .skip(qSkip)
+            	    .limit(qLimit)
+            	    .exec(function (err, country) {
+                	if (err) {
+                    		// Return an error message if a valid response couldn't be formulated.
+                    		return options.handleError(err, req, res, 'Could not list the records.');
+                	}
 
                 // Return a valid response.
                 res.send({
@@ -32,18 +32,15 @@ module.exports = function (app, options) {
                     country: country
                 });
             });
-    });
+    	});
 
     // Create a new country.
     app.post('/country', function (req, res) {
         var country = new countryModel(req.body);
 
+	console.log(country);
+
         country.createdAt = Date.now();
-	country.create = 'POST /country';
-	country.read = 'GET /country';
-	country.readById = 'GET /country/' + country._id;
-	country.update = 'PUT /country/' + country._id;
-	country.delete = 'DELETE /country/' + country._id;
 
         country.save(function (err) {
             if (err) {
@@ -53,7 +50,14 @@ module.exports = function (app, options) {
             // Return a successful created flag along with the country record that has been created.
             res.send({
                 created: true,
-                country: country
+                country: country,
+		crud: {
+			create: 'POST /country',
+			read: 'GET /country',
+			readyById: 'GET /country/' + country._id,
+			update: 'PUT /country/' + country._id,
+			delete: 'DELETE /country/' + country._id
+		}
             });
         });
     });
@@ -62,7 +66,7 @@ module.exports = function (app, options) {
     // Delete a single country record by its _id.
     app.delete('/country/:id', function (req, res) {
         countryModel.findByIdAndRemove(req.params.id, function (err, country) {
-            if (err) {
+            if (err || !country) {
                 return options.handleError(err, req, res, 'Could not delete the record.');
             }
 
