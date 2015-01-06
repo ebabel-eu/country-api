@@ -10,6 +10,7 @@ var countrySchema = function () {
             required: true,
             dropDups: true
         },
+        createdAt: Date,
         names: []   // Ex: [ {lang: 'en', name: 'Netherlands (the)'}, {lang: 'nl', name: 'Nederland'} ]
     });
 };

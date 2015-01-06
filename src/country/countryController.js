@@ -6,7 +6,7 @@ module.exports = function (app, options) {
 	    db = options.db,
         countryModel = require('./countryModel')(db);
 
-	// Get a list of all countries.
+	// List all countries.
 	app.get('/country', function (req, res) {
         // Mongoose querying via querystring. 
         // Ex: append ?limit=2 or ?filter={"id": "de"}
@@ -33,4 +33,24 @@ module.exports = function (app, options) {
                 });
             });
     });
+
+    // Create a new country.
+    app.post('/country', function (req, res) {
+        var country = new countryModel(req.body);
+
+        country.createdAt = Date.now();
+
+        country.save(function (err) {
+            if (err) {
+                return options.handleError(err, req, res, 'Could not create the record.');
+            }
+            
+            // Return a successful created flag along with the country record that has been created.
+            res.send({
+                created: true,
+                country: country
+            });
+        });
+    });
+
 };
