@@ -74,6 +74,28 @@ module.exports = function (app, options) {
         });
     });
 
+    // Read all countries matching a given a language.
+    app.get('/country/lang/:lang', function (req, res) {
+        // Filter the result by any provided querystring parameters.
+        countryModel.find({
+                    names: [
+                        lang: req.params.lang
+                    ]
+                })
+                .exec(function (err, country) {
+                if (err) {
+                        // Return an error message if a valid response couldn't be formulated.
+                        return options.handleError(err, req, res, 'Could not list the records.');
+                }
+
+            // Return a valid response.
+            res.send({
+                records: country.length,
+                country: country
+            });
+        });
+    });
+
     // Update a single country record by its _id.
     app.put('/country/:id', function (req, res) {
 
