@@ -32,10 +32,13 @@ If we build a custom web app that doesn't use a CMS and relies on a thick front-
 * In Chrome, install the Advanced Rest Client app: chrome-extension://hgmloofddffdnphfgcellkdfbfbjeloo/RestClient.html
 * Open a console command line on the Nitrous virtual machine
 * Change your directory to ~/worspace
-  git clone https://github.com/ebabel-eu/country-api.git
+
+ git clone https://github.com/ebabel-eu/country-api.git
+
 * Install MongoDB
-  parts install mongodb
-  parts start mongodb
+
+ parts install mongodb
+ parts start mongodb
 
 ## Step 1
 
@@ -45,15 +48,15 @@ In step 1 we install our dependencies with npm, the Node Package Manager.
 
 Install your dependencies from the command line:
 
-  npm install express --save
-  npm install body-parser --save
-  npm install mongoose --save
+ npm install express --save
+ npm install body-parser --save
+ npm install mongoose --save
 
 Now you can see your package.json has been updated with vi package.json and your dependencies have been installed in a node_modules directory.
 
 ## Step 2
 
-  git checkout step-2
+ git checkout step-2
 
 
 
