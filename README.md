@@ -31,7 +31,7 @@ If we build a custom web app that doesn't use a CMS and relies on a thick front-
 * Create a NodeJS virtual machine on https://www.nitrous.io/
 * In Chrome, install the Advanced Rest Client app: chrome-extension://hgmloofddffdnphfgcellkdfbfbjeloo/RestClient.html
 * Open a console command line on the Nitrous virtual machine
-* Change your directory to ~/worspace
+* Change your directory to ~/workspace
 ```
 git clone https://github.com/ebabel-eu/country-api.git
 ```
