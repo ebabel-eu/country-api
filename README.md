@@ -120,6 +120,47 @@ Save your code with the ESC key followed by :wq and the ENTER key.
 
 Let's now discuss the code we have written.
 
+## Step 4
+
+```
+git checkout step-4
+```
+
+We will now add our controller and model in the country directory.
+
+```
+mkdir src/country
+touch src/country/countryController.js
+touch src/country/countryModel.js
+```
+
+In the controller, let's write the basic version of our API without any endpoint yet.
+
+```
+vi src/country/countryController.js
+```
+
+```
+// List the end points of the country entity.
+module.exports = function (app, options) {
+
+    var mongoose = options.mongoose,
+        Schema = options.mongoose.Schema,
+        db = options.db,
+        countryModel = require('./countryModel')(db);
+};
+```
+
+Now is a good time to discuss the controller.
+
+The model is now to be added:
+
+```
+vi src/country/countryModel.js
+```
+
+
+
 
 ## Notes
 
