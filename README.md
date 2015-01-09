@@ -65,6 +65,12 @@ Now you can see your package.json has been updated with vi package.json and your
 git checkout step-2
 ```
 
+A config.js has been added. It lists the configuration values of your app in a given environment (port, ip and database address) and useful global values like the expiryDate.
+
+A server.js has also been added. This is the starting point of your server side code.
+
+Let's take a moment to run through this code and understand what it does.
+
 
 
 ## Notes
