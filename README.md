@@ -28,17 +28,14 @@ If we build a custom web app that doesn't use a CMS and relies on a thick front-
 
 ## Installation
 
-Create a NodeJS virtual machine on https://www.nitrous.io/
-
-In Chrome, install the Advanced Rest Client app: chrome-extension://hgmloofddffdnphfgcellkdfbfbjeloo/RestClient.html
-
-Open a console command line on the Nitrous virtual machine
-
-Change your directory to ~/worspace
+* Create a NodeJS virtual machine on https://www.nitrous.io/
+* In Chrome, install the Advanced Rest Client app: chrome-extension://hgmloofddffdnphfgcellkdfbfbjeloo/RestClient.html
+* Open a console command line on the Nitrous virtual machine
+* Change your directory to ~/worspace
 
   git clone https://github.com/ebabel-eu/country-api.git
 
-Install MongoDB
+* Install MongoDB
 
   parts install mongodb
   parts start mongodb
