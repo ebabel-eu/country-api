@@ -71,6 +71,25 @@ A server.js has also been added. This is the starting point of your server side 
 
 Let's take a moment to run through this code and understand what it does.
 
+## Step 3
+
+```
+git checkout step-3
+```
+
+Let's create our source code in the src director:
+
+```
+mkdir src
+```
+
+Add the main file of our API:
+
+```
+touch src/api.js
+```
+
+
 
 
 ## Notes
