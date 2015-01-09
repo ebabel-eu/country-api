@@ -89,7 +89,36 @@ Add the main file of our API:
 touch src/api.js
 ```
 
+Edit the api.js file with vi:
 
+```
+vi src/api.js
+```
+
+Press the i key to insert your code (you can copy paste with CTRL SHIFT V):
+
+```
+module.exports = function (app, options) {
+
+    // List all entities, one per variable. Each entity has a controller.
+    var country;
+
+    options.handleError = function (err, req, res, msg) {
+        res.send({
+            error: err,
+            url: req.url,
+            method: req.method,
+            msg: msg
+        });
+    };
+
+    country = require('./country/countryController.js')(app, options);
+};
+```
+
+Save your code with the ESC key followed by :wq and the ENTER key.
+
+Let's now discuss the code we have written.
 
 
 ## Notes
