@@ -1,4 +1,5 @@
-# Workshop for NodeJS CRUD operations on an entity with a RESTful web API
+# NodeJS CRUD API
+Workshop for NodeJS CRUD operations on an entity with a RESTful web API
 
 ## Introduction
 
@@ -36,6 +37,11 @@ Open a console command line on the Nitrous virtual machine
 Change your directory to ~/worspace
 
   git clone https://github.com/ebabel-eu/country-api.git
+
+Install MongoDB
+
+  parts install mongodb
+  parts start mongodb
 
 
 
