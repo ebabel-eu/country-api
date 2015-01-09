@@ -159,8 +159,218 @@ The model is now to be added:
 vi src/country/countryModel.js
 ```
 
+```
+// Mongoose Schema.
+var countrySchema = function () {
+    var Schema = require('mongoose').Schema;
+
+    return new Schema({
+        isoCode: {
+            type: String,
+            index: true,
+            unique: true,
+            required: true,
+            dropDups: true
+        },
+        createdAt: Date,
+        updatedAt: Date,
+        names: []
+    });
+};
+
+// Expose the model.
+module.exports = function (db) {
+    return db.model('country', countrySchema());
+};
+```
+
+Let's discuss the country model.
+
+## Step 5
+
+```
+git checkout step-5
+```
+
+In step 5, we will edit the controller to add 6 endpoints:
+
+```
+vi src/country/countryController.js
+```
+
+Insert the following code after "countryModel = require('./countryModel')(db);" and before the final "};"
+
+```
+    // Create a new country.
+    app.post('/country', function (req, res) {
+        var country = new countryModel(req.body);
+
+        country.createdAt = Date.now();
+
+        country.save(function (err) {
+            if (err) {
+                return options.handleError(err, req, res, 'Could not create the record.');
+            }
+
+            // Return a successful created flag along with the country record that has been created.
+            res.send({
+                created: true,
+                country: country,
+                crud: {
+                    create: 'POST /country',
+                    read: 'GET /country',
+                    readyById: 'GET /country/' + country._id,
+                    update: 'PUT /country/' + country._id,
+                    delete: 'DELETE /country/' + country._id
+                }
+            });
+        });
+    });
+
+    // Read all countries.
+    app.get('/country', function (req, res) {
+        // Mongoose querying via querystring. 
+        // Ex: /country?limit=2, /country?filter={"isoCode":"gb"} or /country/?filter={"names.lang": "nl"}
+        var qSkip = req.query.skip,
+            qLimit = req.query.limit,
+            qSort = req.query.sort,
+            qFilter = req.query.filter ? JSON.parse(req.query.filter) : {};
+
+        // Filter the result by any provided querystring parameters.
+        countryModel.find(qFilter)
+                .sort(qSort)
+                .skip(qSkip)
+                .limit(qLimit)
+                .exec(function (err, country) {
+                if (err) {
+                        // Return an error message if a valid response couldn't be formulated.
+                        return options.handleError(err, req, res, 'Could not list the records.');
+                }
+
+            // Return a valid response.
+            res.send({
+                records: country.length,
+                country: country
+            });
+        });
+    });
+
+    // Read a single country record by its _id.
+    app.get('/country/:id', function (req, res) {
+        countryModel.findById(req.params.id, function (err, country) {
+            if (err) {
+                return options.handleError(err, req, res, 'Could not find the record.');
+            }
+
+            res.send({
+                found: country !== null,
+                country: country
+            });
+        });
+    });
+
+    // Read all countries matching a given language.
+    app.get('/country/lang/:lang', function (req, res) {
+        // Filter the result by any provided querystring parameters.
+        countryModel.find({
+                // Find any country that has a name entry with the matching language.
+                'names.lang': req.params.lang
+            }, {
+                // Exclude fields below:
+                _id: 0,
+                createdAt: 0,
+                __v: 0,
+                updatedAt: 0
+            })
+            .exec(function (err, country) {
+                if (err) {
+                    // Return an error message if a valid response couldn't be formulated.
+                    return options.handleError(err, req, res, 'Could not list the records.');
+                }
+
+                // Return a valid response.
+                res.send({
+                    records: country.length,
+                    country: country
+                });
+            });
+    });
+
+    // Update a single country record by its _id.
+    app.put('/country/:id', function (req, res) {
+
+        countryModel.findById(req.params.id, function (err, country) {
+            var updated;
+
+            if (err) {
+                return options.handleError(err, req, res, 'Could not find the record to update.');
+            }
+
+            updated = req.body;
+            updated.updatedAt = Date.now();
+            updated.__v = country.__v + 1;
+
+            country.update(
+                updated,
+                {
+                    safe: true,
+                    upsert: false,
+                    multi: false,
+                    overwrite: false
+                },
+                function (err, numberAffected, raw) {
+                    if (err) {
+                        return options.handleError(err, req, res, 'Could not update the record.');
+                    }
+
+                    res.send({
+                        numberAffected: numberAffected,
+                        raw: raw,
+                        previous: country,
+                        updated: req.body
+                    });
+                }
+            );
+        });
+    });
+
+    // Delete a single country record by its _id.
+    app.delete('/country/:id', function (req, res) {
+        countryModel.findByIdAndRemove(req.params.id, function (err, country) {
+            if (err || !country) {
+                return options.handleError(err, req, res, 'Could not delete the record.');
+            }
+
+            res.send({
+                deleted: true,
+                country: country
+            });
+        });
+    });
+```
+
+Let's go through together each other these end points
+
+## Step 6
+
+You can now run your API with the following command and test it by browsing to your virtual machine address with the Chrome app Advanced Rest Client.
+
+```
+node server.js
+```
+
+Now try all CRUD operations:
+
+* Creating new country records
+* Reading what you have created
+* Updating one record
+* Deleting one record
 
 
+## Stretch objectives:
+
+* Add a new "users" entity with CRUD operations similar to the country entity.
+* Discuss how to build an app that would make use of this kind of API.
 
 ## Notes
 
